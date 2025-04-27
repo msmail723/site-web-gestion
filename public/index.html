@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de Recettes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Gestion de Recettes</h1>
+        <button id="lang-toggle">EN/FR</button>
+        <div id="user-info"></div>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link" data-section="recipes-section">Recettes</a></li>
+                <li><a href="#" class="nav-link" data-section="submit-recipe-section">Ajouter Recette</a></li>
+                <li><a href="#" class="nav-link" data-section="translation-section">Traduction</a></li>
+                <li><a href="#" class="nav-link" data-section="profile-section">Mon Profil</a></li>
+                <li><a href="#" class="nav-link" data-section="users-section">Utilisateurs</a></li>
+                <li><a href="#" class="nav-link" data-section="manage-recipes-section">Gestion Recettes</a></li>
+                <li><a href="#" id="logout-link">Déconnexion</a></li>
+                <li><a href="#" class="nav-link" data-section="admin-recipes-section">Admin Recettes</a></li>
+
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Section Authentification -->
+        <section id="auth-section">
+            <h2>Connexion</h2>
+            <form id="login-form">
+                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <button type="submit">Se connecter</button>
+            </form>
+            <h2>Inscription</h2>
+            <form id="register-form">
+                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <select name="demandeRole">
+                    <option value="">--Rôle-- (optionnel)</option>
+                    <option value="chef">Demande Chef</option>
+                    <option value="trad">Demande Traducteur</option>
+                </select>
+                <button type="submit">S'inscrire</button>
+            </form>
+        </section>
+        
+        <!-- Section Liste de Recettes -->
+        <section id="recipes-section" class="hidden">
+            <h2>Liste des Recettes</h2>
+            <input type="text" id="search-input" placeholder="Recherche...">
+            <button id="search-button">Rechercher</button>
+            <div id="recipes-list"></div>
+        </section>
+        
+        <!-- Section Détails d'une Recette -->
+        <section id="recipe-details-section" class="hidden">
+            <h2>Détails de la Recette</h2>
+            <div id="recipe-details"></div>
+            <button id="back-to-list">Retour à la liste</button>
+        </section>
+        
+        <!-- Section Soumission de Recette (pour les Chefs) -->
+        <section id="submit-recipe-section" class="hidden">
+            <h2>Ajouter une Recette</h2>
+            <form id="submit-recipe-form">
+                <input type="text" name="name" placeholder="Titre (anglais)">
+                <input type="text" name="nameFR" placeholder="Titre (français)">
+                <textarea name="steps" placeholder="Étapes (anglais, séparées par des sauts de ligne)"></textarea>
+                <textarea name="stepsFR" placeholder="Étapes (français, séparées par des sauts de ligne)"></textarea>
+                <textarea name="ingredients" placeholder="Ingrédients (anglais, format JSON ou texte)"></textarea>
+                <textarea name="ingredientsFR" placeholder="Ingrédients (français, format JSON ou texte)"></textarea>
+                <input type="text" name="imageURL" placeholder="URL de l'image">
+                <button type="submit">Ajouter la recette</button>
+            </form>
+        </section>
+        
+        <!-- Section Traduction (pour les Traducteurs) -->
+        <section id="translation-section" class="hidden">
+            <h2>Interface de Traduction</h2>
+            <form id="translation-form">
+                <input type="number" name="recipeId" placeholder="ID de la Recette" required>
+                <input type="text" name="nameFR" placeholder="Titre traduit (français)">
+                <textarea name="stepsFR" placeholder="Étapes traduites (français, séparées par des sauts de ligne)"></textarea>
+                <textarea name="ingredientsFR" placeholder="Ingrédients traduits (français, format JSON ou texte)"></textarea>
+                <button type="submit">Mettre à jour la traduction</button>
+            </form>
+        </section>
+        
+        <!-- Section Profil -->
+        <section id="profile-section" class="hidden">
+            <h2>Mon Profil</h2>
+            <div id="profile-info"></div>
+            <h3>Demande d'élévation de rôle</h3>
+            <form id="role-request-form">
+                <select name="demandeRole" required>
+                    <option value="">--Choisissez--</option>
+                    <option value="chef">Demande Chef</option>
+                    <option value="trad">Demande Traducteur</option>
+                </select>
+                <button type="submit">Envoyer la demande</button>
+            </form>
+        </section>
+
+
+        <!-- Section Gestion des Utilisateurs (pour l'Admin) -->
+        <section id="users-section" class="hidden">
+            <h2>Gestion des Utilisateurs</h2>
+            <div id="users-list"></div>
+        </section>
+
+        <!-- Section Gestion des Recettes (Admin) -->
+        <section id="admin-recipes-section" class="hidden">
+            <h2>Gestion des Recettes (Admin)</h2>
+            <div id="admin-recipes-list"></div>
+        </section>
+
+
+        <!-- Section Gestion des Recettes -->
+        <section id="manage-recipes-section" class="hidden">
+            <h2>Gestion des Recettes</h2>
+            <form id="manage-recipe-status-form">
+                <input type="number" name="recipeId" placeholder="ID de la recette" required>
+                <select name="status" required>
+                    <option value="">--Choisissez le statut--</option>
+                    <option value="terminée">Terminée</option>
+                    <option value="publiée">Publiée</option>
+                </select>
+                <button type="submit">Mettre à jour le statut</button>
+            </form>
+        </section>
+
+    </main>
+    
+    <footer>
+        <p>Projet de Programmation Web 2024-2025</p>
+    </footer>
+</body>
+</html>
